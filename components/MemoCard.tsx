@@ -14,8 +14,7 @@ export const MemoCard = ({ date, title, content, from }: MemoCardProps) => {
   const [shown] = useState("");
 
   return (
-    <div className="lg:col-start-3 lg:row-end-1">
-      <h2 className="sr-only">Summary</h2>
+    <div className="lg:col-start-4 lg:row-end-1 m-6">
       <div className="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
         <dl className="flex flex-wrap">
           <div className="flex-auto pl-6 pt-6">
@@ -28,7 +27,7 @@ export const MemoCard = ({ date, title, content, from }: MemoCardProps) => {
               {formatDate(date)}
             </dd>
           </div>
-          <div className="my-5 flex w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-4 min-h-48">
+          <div className="my-5 flex w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-4 ">
             <p className="text-md leading-6 text-gray-900">{content}</p>
           </div>
           <div className="mt-2 border-t border-gray-900/5 px-6 py-6">

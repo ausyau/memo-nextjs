@@ -28,8 +28,10 @@ export default async function ProtectedPage() {
   console.log("User", user);
   const memoTable =
     user.email === "demouser@demo.com" ? "memos_demo" : "memos_live";
-  const { data: memos } = await supabase.from(memoTable).select();
-  console.log("Memo Table", memoTable);
+  const { data: memos } = await supabase
+    .from(memoTable)
+    .select()
+    .order("created_at", { ascending: false });
   console.log("*Memos are *", memos);
 
   return (
@@ -42,7 +44,7 @@ export default async function ProtectedPage() {
         </nav>
       </div>
 
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
+      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-3xl px-3">
         <main className="flex-1 flex flex-col">
           <div className="animate-in flex flex-col opacity-0 max-w-4xl px-3">
             <div className="flex flex-col gap-16 items-center">
@@ -53,6 +55,7 @@ export default async function ProtectedPage() {
                 Now that you've logged in, you can view memos left for you! You
                 can also write your own.
               </p>
+
               <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
             </div>
           </div>
