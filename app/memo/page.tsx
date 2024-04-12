@@ -1,22 +1,12 @@
-import DeployButton from "@/components/DeployButton";
 import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import FetchDataSteps from "@/components/tutorial/FetchDataSteps";
-import Header from "@/components/Welcome";
 import { redirect } from "next/navigation";
 import { MemoCard } from "@/components/MemoCard";
-
-const Memo = (): JSX.Element => {
-  return (
-    <div>
-      <p>This is your Memo</p>
-    </div>
-  );
-};
+import { MemoInput } from "@/components/MemoInput";
+import { submitPost } from "@/utils/supabase/submitPost";
 
 export default async function ProtectedPage() {
   const supabase = createClient();
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -25,14 +15,12 @@ export default async function ProtectedPage() {
     return redirect("/");
   }
 
-  console.log("User", user);
   const memoTable =
     user.email === "demouser@demo.com" ? "memos_demo" : "memos_live";
   const { data: memos } = await supabase
     .from(memoTable)
     .select()
     .order("created_at", { ascending: false });
-  console.log("*Memos are *", memos);
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -52,26 +40,33 @@ export default async function ProtectedPage() {
                 Thanks for trying Memo
               </p>
               <p className="text-lg lg:text-lg !leading-tight mx-auto max-w-xl text-center">
-                Now that you've logged in, you can view memos left for you! You
-                can also write your own.
+                Now that you've logged in, you can view memos left for you!
+                Click the '+' button below to write your own.
               </p>
 
               <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
             </div>
           </div>
-          <div className="flex flex-1 flex-col flex-start justify-start">
+          <div className="">
             <h2 className="font-bold text-4xl mb-4 ">Your Memos</h2>
-            {memos?.map(
-              ({ created_at, title, author, memo_content }, index) => (
-                <MemoCard
-                  key={index}
-                  date={created_at}
-                  content={memo_content}
-                  from={author}
-                  title={title}
-                />
-              )
+            {memos?.length === 0 ? (
+              <p>No memos yet</p>
+            ) : (
+              <div className="no-scrollbar overflow-y-auto max-h-[44rem]">
+                {memos?.map(
+                  ({ created_at, title, author, memo_content }, index) => (
+                    <MemoCard
+                      key={index}
+                      date={created_at}
+                      content={memo_content}
+                      from={author}
+                      title={title}
+                    />
+                  )
+                )}
+              </div>
             )}
+            <MemoInput submitPost={submitPost} />
           </div>
         </main>
       </div>
