@@ -22,6 +22,18 @@ export default async function ProtectedPage() {
     .select()
     .order("created_at", { ascending: false });
 
+  const formattedMemos = memos?.map((memo) => {
+    const { read, user_id } = memo;
+    if (read || user.id === user_id) {
+      return memo;
+    }
+
+    return {
+      ...memo,
+      memo_content: "",
+    };
+  });
+
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <div className="w-full">
@@ -53,14 +65,24 @@ export default async function ProtectedPage() {
               <p>No memos yet</p>
             ) : (
               <div className="no-scrollbar overflow-y-auto max-h-[44rem]">
-                {memos?.map(
-                  ({ created_at, title, author, memo_content }, index) => (
+                {formattedMemos?.map(
+                  ({
+                    created_at,
+                    title,
+                    author,
+                    memo_content,
+                    read,
+                    id,
+                    user_id,
+                  }) => (
                     <MemoCard
-                      key={index}
+                      key={id}
                       date={created_at}
                       content={memo_content}
                       from={author}
                       title={title}
+                      isRead={read || user.id === user_id}
+                      memoId={id}
                     />
                   )
                 )}

@@ -1,7 +1,4 @@
-import { redirect } from "next/navigation";
-
 import { createClient } from "./server";
-import { Router } from "next/router";
 
 export const submitPost = async (formData: FormData) => {
   "use server";
@@ -16,9 +13,6 @@ export const submitPost = async (formData: FormData) => {
 
   const memoTable =
     user?.email === "demouser@demo.com" ? "memos_demo" : "memos_live";
-  console.log("User Subit", user);
-  console.log("Title", title);
-  console.log("Memo", memo);
 
   const { data, error } = await supabase
     .from(memoTable)

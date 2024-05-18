@@ -12,7 +12,7 @@ export function MemoInput({
   submitPost: (formData: FormData) => void;
 }) {
   const router = useRouter();
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -72,7 +72,7 @@ export function MemoInput({
                     placeholder="Title"
                     required
                   />
-                  <div className="w-full m-1 p-[1px] bg-gray-200" />
+                  <div className="w-full m-1 p-[1px] bg-gray-100" />
                   <div className="mb-2">
                     <textarea
                       rows={5}
@@ -80,15 +80,14 @@ export function MemoInput({
                       id="comment"
                       className="block w-full resize-none border-0 bg-transparent p-2 text-gray-800 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Write your memo"
-                      defaultValue={""}
                     />
                   </div>
 
                   <div className="mt-4">
                     <SubmitButton
                       formAction={submitMemo}
-                      className="border rounded-md px-4 py-2 text-sm text-foreground mb-2 bg-blue-100 text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      pendingText="Signing Up..."
+                      className="border rounded-md px-4 py-2 text-sm text-foreground mb-2 bg-blue-500 text-blue-900 hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      pendingText="Posting..."
                     >
                       Post
                     </SubmitButton>
